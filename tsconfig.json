@@ -5,15 +5,15 @@
 
   "exclude": ["node_modules", "client/**/*", "build/**/*"],
   "compilerOptions": {
-    "lib": ["es2023"],
-    "module": "es2022",
-    "target": "es2022",
+    "lib": ["ESNext"],
+    "module": "ESNext",
+    "target": "ESNext",
 
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "bundler",
+    "moduleResolution": "nodenext",
     "resolveJsonModule": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
