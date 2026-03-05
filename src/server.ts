@@ -6,35 +6,51 @@ import Router from '@koa/router';
 import { koaSwagger } from 'koa2-swagger-ui';
 import { RegisterRoutes } from '../build/routes';
 import swagger from '../build/swagger.json';
+// import { createTextChangeRange } from 'typescript';
+import { type AppBookDatabaseState, getBookDatabase} from './books/book_database_access';
+import { type AppWarehouseDatabaseState, getDefaultWarehouseDatabase} from './warehouse/warehouse_database_access';
 
-const app = new Koa();
+export default async function(port?: number) {
+  const bookDb = await getBookDatabase('mcmasterful-books')
+  const warehouseDb = await getDefaultWarehouseDatabase('mcmasterful-warehouse')
 
-// We use koa-qs to enable parsing complex query strings, like our filters.
-qs(app);
-
-// And we add cors to ensure we can access our API from the mcmasterful-books website
-app.use(cors());
-
-// Body parser for tsoa routes
-app.use(bodyParser());
-
-// Create a router for tsoa routes
-const tsoaRouter = new Router();
-RegisterRoutes(tsoaRouter);
-app.use(tsoaRouter.routes());
-app.use(tsoaRouter.allowedMethods());
-
-// Swagger UI documentation
-app.use(koaSwagger({
-  routePrefix: '/docs',
-  specPrefix: '/docs/spec',
-  exposeSpec: true,
-  swaggerOptions: {
-    spec: swagger
+  const state: AppBookDatabaseState & AppWarehouseDatabaseState = {
+    books: bookDb,
+    warehouse: warehouseDb
   }
-}));
+  
+  const app = new Koa();
+  
+  app.use(async (ctx,next): Promise<void>=>{
+    ctx.state=state
+    await next()
+  })
 
-app.listen(3000, () => {
-  console.log('Server listening on port 3000');
-  console.log('Swagger docs available at http://localhost:3000/docs');
-});
+  qs(app);
+  app.use(cors());
+  app.use(bodyParser());
+
+  const tsoaRouter = new Router();
+  RegisterRoutes(tsoaRouter);
+  app.use(tsoaRouter.routes());
+  app.use(tsoaRouter.allowedMethods());
+  
+  app.use(koaSwagger({
+    routePrefix: '/docs',
+    specPrefix: '/docs/spec',
+    exposeSpec: true,
+    swaggerOptions: {
+      spec: swagger
+    }
+  }));
+  
+  
+  return {
+    server: app.listen(port, () => {
+      console.log(`Server listening on port ${port}`);
+      console.log(`Swagger docs available at http://localhost:${port}/docs`);
+    }),
+    state
+  }
+}
+
