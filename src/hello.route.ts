@@ -1,5 +1,5 @@
 import { Controller, Get, Route, Path } from 'tsoa';
-import { type ParameterizedContext, type DefaultContext } from 'koa';
+// import { type ParameterizedContext, type DefaultContext } from 'koa';
 
 @Route('hello')
 export class HelloController extends Controller {

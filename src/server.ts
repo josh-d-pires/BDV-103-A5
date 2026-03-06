@@ -11,20 +11,20 @@ import { type AppBookDatabaseState, getBookDatabase} from './books/book_database
 import { type AppWarehouseDatabaseState, getDefaultWarehouseDatabase} from './warehouse/warehouse_database_access';
 
 export default async function(port?: number) {
-  const bookDb = await getBookDatabase('mcmasterful-books')
-  const warehouseDb = await getDefaultWarehouseDatabase('mcmasterful-warehouse')
+  const bookDb = await getBookDatabase('mcmasterful-books');
+  const warehouseDb = await getDefaultWarehouseDatabase('mcmasterful-warehouse');
 
   const state: AppBookDatabaseState & AppWarehouseDatabaseState = {
     books: bookDb,
     warehouse: warehouseDb
-  }
+  };
   
   const app = new Koa();
   
   app.use(async (ctx,next): Promise<void>=>{
-    ctx.state=state
-    await next()
-  })
+    ctx.state=state;
+    await next();
+  });
 
   qs(app);
   app.use(cors());
@@ -51,6 +51,6 @@ export default async function(port?: number) {
       console.log(`Swagger docs available at http://localhost:${port}/docs`);
     }),
     state
-  }
+  };
 }
 

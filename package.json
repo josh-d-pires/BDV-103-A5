@@ -4,8 +4,8 @@
   "description": "This is a template repository for the first assignment in BVD 103 at McMaster Continuing Education.",
   "main": "src/server.ts",
   "scripts": {
-    "generate:full": "npx tsoa spec-and-routes && (sed -i.bak '1s/^/\\/\\/ @ts-nocheck\\n/' build/routes.ts && rm -f build/routes.ts.bak)",
-    "generate": "./generate-openapi.sh",
+    "generate": "npx tsoa spec-and-routes && (sed -i.bak '1s/^/\\/\\/ @ts-nocheck\\n/' build/routes.ts && rm -f build/routes.ts.bak)",
+    "generate:full": "./generate-openapi.sh",
     "start-server": "npm run generate && tsx run-server.ts",
     "test": "vitest",
     "test:ci": "vitest run",

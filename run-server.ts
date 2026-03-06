@@ -1,3 +1,3 @@
-import server from './src/server'
+import server from './src/server';
 
-await server(3000)
+server(3000);

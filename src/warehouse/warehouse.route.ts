@@ -11,6 +11,7 @@ import {
 } from 'tsoa';
 import { getDefaultWarehouseData, type WarehouseData } from './warehouse_data';
 import { type BookID } from '../books/books.route';
+import { isArray } from 'node:util';
 
 // Re-export BookID for convenience
 export type { BookID } from '../books/books.route';
@@ -140,6 +141,11 @@ async function fulfilOrder(
   );
 }
 
+
+
+
+
+
 /**
  * Controller for warehouse operations
  */
@@ -219,7 +225,7 @@ export class OrderController extends Controller {
   @SuccessResponse(201, 'Order placed')
   @Response(500, 'Server error')
   public async placeOrder(
-    @Body() requestBody: PlaceOrderRequest
+    @Body() requestBody: PlaceOrderRequest 
   ): Promise<string> {
     try {
       const data = await getDefaultWarehouseData();

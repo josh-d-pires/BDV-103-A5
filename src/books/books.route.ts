@@ -107,6 +107,14 @@ export async function getBook(id: BookID, { books }: BookDatabaseAccessor): Prom
   return book;
 }
 
+
+
+
+
+
+
+
+
 /**
  * Controller for book operations
  */

@@ -1,4 +1,6 @@
-import { type Collection, type Db, MongoClient } from 'mongodb'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable semi */
+import { type Collection, Db, MongoClient } from 'mongodb'
 
 import { type Book } from '../../adapter/assignment-3'
 
