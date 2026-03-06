@@ -11,7 +11,7 @@ import {
 } from 'tsoa';
 import { getDefaultWarehouseData, type WarehouseData } from './warehouse_data';
 import { type BookID } from '../books/books.route';
-import { isArray } from 'node:util';
+// import { isArray } from 'node:util';
 
 // Re-export BookID for convenience
 export type { BookID } from '../books/books.route';
